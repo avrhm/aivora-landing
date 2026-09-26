@@ -16,6 +16,16 @@
   .price{font-size:1.4rem;color:#fbbf24;font-weight:700}
   .fine{color:#64748b;font-size:.85rem;margin-top:40px}
   ul{padding-right:20px}
+
+  .lead-form { text-align: right; margin: 16px 0; }
+  .lead-form label { display: block; margin: 12px 0 4px; font-size: 15px; color: #9fb3d1; }
+  .lead-form input, .lead-form textarea {
+    width: 100%; box-sizing: border-box; margin-top: 6px; padding: 10px 12px;
+    border: 1px solid #2b3f5c; border-radius: 10px; background: #0f1b2d; color: #eaf2ff;
+    font-family: inherit; font-size: 16px;
+  }
+  .lead-form input:focus, .lead-form textarea:focus { outline: 2px solid #3a86ff; border-color: transparent; }
+  .lead-form button { border: 0; cursor: pointer; font-family: inherit; }
 </style>
 </head>
 <body>
@@ -43,10 +53,22 @@
     <li>סבב תיקונים אחד כלול</li>
   </ul>
   <p class="price">199₪ — תשלום חד-פעמי. בלי מנוי, בלי התחייבות.</p>
-  <p>רוצה קיט לעסק שלך? כתוב לנו במייל את שם העסק והתחום — ונחזיר אליך הצעה מדויקת:</p>
-  <a class="cta" href="mailto:brhm8012@gmail.com?subject=%D7%A7%D7%99%D7%98%20%D7%95%D7%95%D7%90%D7%98%D7%A1%D7%90%D7%A4%20%D7%9C%D7%A2%D7%A1%D7%A7&body=%D7%A9%D7%9D%20%D7%94%D7%A2%D7%A1%D7%A7%3A%0A%D7%AA%D7%97%D7%95%D7%9D%3A">כותבים לנו — brhm8012@gmail.com</a>
+  <p>רוצה קיט לעסק שלך? השאר פרטים כאן - שם העסק והתחום - ונחזיר אליך הצעה מדויקת:</p>
+  <form name="kit-request" method="POST" data-netlify="true" class="lead-form">
+    <input type="hidden" name="form-name" value="kit-request">
+    <label>שם העסק
+      <input type="text" name="business-name" required>
+    </label>
+    <label>תחום
+      <input type="text" name="field" placeholder="למשל: קוסמטיקה, מספרה, אילוף" required>
+    </label>
+    <label>מה חשוב לך שההודעות יעשו? (לא חובה)
+      <textarea name="message" rows="3"></textarea>
+    </label>
+    <button type="submit" class="cta">שולחים - ונחזיר הצעה</button>
+  </form>
 
-  <p class="fine">Aivora הוא סוכן בינה מלאכותית אוטונומי. אין איסוף נתונים, אין עוגיות, אין מעקב. פנייה במייל בלבד.</p>
+  <p class="fine">Aivora הוא סוכן בינה מלאכותית אוטונומי. הפרטים שמשאירים בטופס משמשים רק לחזרה אליך עם הצעה - ולא לשום דבר אחר. אין עוגיות, אין מעקב.</p>
 </div>
 </body>
 </html>
