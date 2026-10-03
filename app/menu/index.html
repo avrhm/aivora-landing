@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aivora - תפריט מסודר לוואטסאפ ולהדפסה</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;line-height:1.6}
+.wrap{max-width:560px;margin:0 auto;padding:24px 18px 50px}
+h1{color:#38bdf8;font-size:1.6rem;margin:0 0 4px}.sub{color:#94a3b8;margin-top:0}
+label{display:block;margin:14px 0 4px;color:#9fb3d1;font-size:15px}
+input,textarea{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #2b3f5c;border-radius:10px;background:#0f1b2d;color:#eaf2ff;font-family:inherit;font-size:16px}
+button{border:0;cursor:pointer;font-family:inherit;background:#0ea5e9;color:#0f172a;font-weight:700;padding:12px 20px;border-radius:10px;font-size:1rem;margin:12px 8px 0 0}
+button.alt{background:#334155;color:#e2e8f0}
+pre{background:#075e54;color:#ecfdf5;border-radius:12px;padding:14px 16px;white-space:pre-wrap;margin-top:14px;font-family:inherit}
+.fine{color:#64748b;font-size:.85rem;margin-top:30px}
+@media print{body{background:#fff;color:#000}.noprint{display:none}pre{background:#fff;color:#000;border:1px solid #000}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="noprint">
+<h1>תפריט מסודר</h1>
+<p class="sub">כותבים שורה לכל פריט. מקבלים הודעה מוכנה להעתקה לוואטסאפ, ודף להדפסה.</p>
+<label>שם העסק<input id="biz" maxlength="40" value="הקפה של דנה"></label>
+<label>הפריטים (שורה לכל פריט: שם, ואז מחיר. כותרת קטגוריה: שורה שמתחילה ב-#)
+<textarea id="items" rows="9">#שתייה חמה
+אספרסו 10
+קפוץ' 14
+#מאפים
+קרואסון חמאה 12
+עוגת גבינה 22</textarea></label>
+<label>שורת סיום (לא חובה)<input id="foot" maxlength="80" value="להזמנות: שלחו הודעה"></label>
+<button id="cp">העתקה לוואטסאפ</button><button id="pr" class="alt">הדפסה</button>
+</div>
+<pre id="out"></pre>
+<p class="fine noprint">הכל קורה בדפדפן שלך. אין חשבונות, אין שרת, אין איסוף נתונים, ולא נשמר דבר. נוצר על ידי Aivora, סוכן AI אוטונומי. גרסת דמו.</p>
+</div>
+<script>
+const $=i=>document.getElementById(i);
+function build(){
+  const L=[ "*"+($("biz").value.trim()||"התפריט שלנו")+"*" ];
+  $("items").value.split("\n").map(s=>s.trim()).filter(Boolean).forEach(s=>{
+    if(s[0]==="#"){L.push("","*"+s.slice(1).trim()+"*");return}
+    const m=s.match(/^(.*?)[\s:-]+(\d+(?:[.,]\d+)?)\s*(?:₪|ש"ח|שח)?$/);
+    L.push(m?"• "+m[1].trim()+" - "+m[2].replace(",",".")+" ₪":"• "+s);
+  });
+  const f=$("foot").value.trim(); if(f)L.push("",f);
+  $("out").textContent=L.join("\n");
+}
+["biz","items","foot"].forEach(i=>$(i).addEventListener("input",build));
+$("cp").onclick=async()=>{try{await navigator.clipboard.writeText($("out").textContent);$("cp").textContent="הועתק"}catch(e){const r=document.createRange();r.selectNodeContents($("out"));getSelection().removeAllRanges();getSelection().addRange(r)}};
+$("pr").onclick=()=>window.print();
+build();
+</script>
+</body>
+</html>
